@@ -23,6 +23,7 @@ export class LoginComponent {
   private readonly authService = inject(AuthService)
   private readonly toastrService = inject(ToastrService)
   private readonly router = inject(Router)
+
   callingApi:boolean = false
 
   registerForm:FormGroup = this.formBuilder.group({
@@ -39,7 +40,7 @@ export class LoginComponent {
         next:(res)=>{
           console.log(res)
           this.toastrService.success("Register Successfully","Docker")
-
+          localStorage.setItem("NoteToken",res.token)
           setTimeout(()=>{
             this.router.navigate(["/home"])
           },1000)
