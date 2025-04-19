@@ -1,0 +1,90 @@
+<section class="pt-10 ">
+  <div class="flex flex-col justify-center items-center h-[85vh]">
+    <div class="flex flex-wrap md:w-[80%] shadow   rounded-lg bg-gray-50 gap-2 overflow-hidden">
+      <div class="md:w-[49%] w-full h-full   bg-black rounded-lg md:flex justify-center items-center animate__animated animate__fadeInLeft " >
+        <h3 class="text-[40px] font-bold text-white "> Docket </h3>
+      </div>
+
+      <form [formGroup]="registerForm" class="md:w-[49%]  w-full  mx-auto  py-5 px-6  animate__animated animate__fadeInRight"  >
+        <h2 class="text-3xl font-bold mb-7">Login Now :</h2>
+
+
+
+        <div class="mb-7">
+          <p-floatlabel>
+            <input type="email" id="email" formControlName="email" pInputText class=" w-full" [style]="{borderColor: 'rgba(0, 0, 0, 0.8)'}" />
+            <label for="email" [style]="{ color: 'rgba(0, 0, 0, 0.6)' }">User Email</label>
+          </p-floatlabel>
+
+          @let emailInput = registerForm.get('email') ;
+
+          @if(emailInput?.errors && emailInput?.touched) {
+            <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+              <span class="sr-only">Danger</span>
+              <div>
+                  <ul class="mt-1.5 list-disc list-inside">
+                    @if(emailInput?.getError('required') && emailInput?.touched) {
+                      <li> This field is required</li>
+                    }@else if (emailInput?.getError('email')) {
+                      <li>Invalid email format</li>
+                    }
+                </ul>
+              </div>
+            </div>
+          }
+
+        </div>
+
+
+        <div class="mb-7">
+          <p-floatlabel>
+
+            <p-password id="userPassword" formControlName="password" [feedback]="false" [toggleMask]="true" [style]="{width: '100%;'}" />
+            <label for="userPassword" [style]="{ color: 'rgba(0, 0, 0, 0.6)' }">User Password</label>
+          </p-floatlabel>
+
+          @let passwordInput = registerForm.get('password') ;
+
+          @if(passwordInput?.errors && passwordInput?.touched) {
+            <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+              <span class="sr-only">Danger</span>
+              <div>
+                  <ul class="mt-1.5 list-disc list-inside">
+                    @if(passwordInput?.getError('required') && passwordInput?.touched) {
+                      <li> This field is required</li>
+                    }@else if (passwordInput?.getError('pattern')) {
+                      <li>Password must start with a capital letter and have at least 8 characters</li>
+                    }
+                </ul>
+              </div>
+            </div>
+          }
+
+
+        </div>
+
+
+        <div class=" text-end">
+
+          <p-button  class="w-full" (onClick)="loginRegisterForm()"   [style]="{backgroundColor: 'rgb(0,0,0)' , color: 'white'}" >
+            @if(callingApi){
+              <i class="fa-solid fa-spinner fa-spin"></i>
+
+            }@else {
+
+              <i class="fa-solid fa-arrow-right rotate-180"></i>
+            }
+            Sumbit
+
+
+
+             </p-button>
+        </div>
+      </form>
+
+    </div>
+
+
+
+  </div>
+</section>
