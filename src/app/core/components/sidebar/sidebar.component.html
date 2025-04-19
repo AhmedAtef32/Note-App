@@ -1,4 +1,5 @@
-<button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar"
+<Section class="hidden md:block">
+  <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar"
   type="button"
   class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
   <span class="sr-only">Open sidebar</span>
@@ -12,8 +13,9 @@
 <aside id="default-sidebar"
   class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
   aria-label="Sidebar">
-  <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-    <h1 class="text-2xl font-bold text-center my-4 dark:text-white"> Docket</h1>
+  <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 flex flex-col justify-between">
+   <div>
+    <h1 class="text-2xl font-bold text-center my-4 dark:text-white mb-8"> Docket</h1>
     <ul class="space-y-2 font-medium my-3">
       @if (islogged()) {
         <li>
@@ -41,5 +43,75 @@
       }
 
     </ul>
+   </div>
+
+   <div class="flex justify-between">
+
+    <p-button type="button"  icon="pi pi-moon" rounded="true"  styleClass="h-8 w-8" [style]="{backgroundColor: '#F9FAFB' , color: 'black' , border: 'none'}"></p-button>
+    @if(islogged()) {
+
+      <p-button type="button"  icon="pi pi-sign-out" rounded="true"  styleClass="h-8 w-8" [style]="{backgroundColor: '#F9FAFB' , color: 'red' , border: 'none'}"></p-button>
+    }
+   </div>
+
   </div>
 </aside>
+</Section>
+
+<div class="card flex md:hidden">
+  <p-drawer #drawerRef [(visible)]="visible">
+      <ng-template #headless>
+          <div class="flex flex-col h-full justify-between">
+              <div>
+                <div class="flex items-center justify-between px-6 pt-4 shrink-0">
+                  <h1 class="text-2xl font-bold text-center my-4 text-black dark:text-white">Docket</h1>
+                  <span>
+                      <p-button type="button" (click)="closeCallback($event)" icon="pi pi-times" rounded="true"  styleClass="h-8 w-8" [style]="{backgroundColor: 'white' , color: 'black' , border: 'none'}"></p-button>
+                  </span>
+              </div>
+              <div class="overflow-y-auto">
+                <ul class="space-y-2 font-medium my-3">
+                  @if (islogged()) {
+                    <li>
+                      <a routerLink="/home" routerLinkActive="!bg-black !text-white" role="button"
+                        class="flex items-center p-2 text-gray-600 rounded-lg dark:text-white  dark:hover:bg-gray-700 group">
+
+                        <span class="ms-3">My Notes</span>
+                      </a>
+                    </li>
+                  }@else {
+                    <li>
+                      <a routerLink="/login" routerLinkActive="!bg-black !text-white" role="button"
+                        class="flex items-center p-2 text-gray-600 rounded-lg dark:text-white  dark:hover:bg-gray-700 group ">
+
+                        <span class="ms-3">Login</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a routerLink="/register" routerLinkActive="!bg-black !text-white" role="button"
+                        class="flex items-center p-2 text-gray-600 rounded-lg dark:text-white  dark:hover:bg-gray-700 group">
+
+                        <span class="ms-3">Register</span>
+                      </a>
+                    </li>
+                  }
+
+                </ul>
+              </div>
+              </div>
+
+              <div class="flex justify-between">
+
+                <p-button type="button"  icon="pi pi-moon" rounded="true"  styleClass="h-8 w-8" [style]="{backgroundColor: '#F9FAFB' , color: 'black' , border: 'none'}"></p-button>
+                @if(islogged()) {
+
+                  <p-button type="button"  icon="pi pi-sign-out" rounded="true"  styleClass="h-8 w-8" [style]="{backgroundColor: '#F9FAFB' , color: 'red' , border: 'none'}"></p-button>
+                }
+               </div>
+          </div>
+      </ng-template>
+  </p-drawer>
+ <div class="flex justify-start pt-7 ps-3">
+  <p-button (click)="visible = true" icon="pi pi-bars" [style]="{backgroundColor: 'white' , color: 'black', border: 'none'}" />
+ </div>
+  </div>
