@@ -1,0 +1,102 @@
+<Section>
+  <div class="container mx-auto">
+    <div class="input__search md:w-[50%] mx-auto">
+      <input type="text" placeholder="Search notes..."
+        class=" w-full rounded-2xl border-2 border-gray-200  ring-transparent" />
+    </div>
+
+    <div class="md:ms-8 mt-8">
+      <h2 class="text-4xl font-bold mb-12">Notes :</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 transition-all duration-300 ease-in-out">
+
+        @for (note of userNotes; track note._id ; let index = $index) {
+
+        <app-note-container (itemEvent)="userNotes.splice(index, 1)" [index]="index" [note]="note"></app-note-container>
+        }
+
+
+
+
+      </div>
+
+    </div>
+
+  </div>
+</Section>
+
+<section>
+  <main class="fixed bottom-4 right-4 z-30 ">
+    <div class="card flex justify-center">
+      <p-button (click)="showDialog()" icon="pi pi-plus" [rounded]="true"
+        [style]="{backgroundColor: 'black' , color: 'white' , border: 'none'}" />
+      <form [formGroup]="addNoteForm">
+        <p-dialog header="ADD Note" [modal]="true" [(visible)]="visible" [style]="{ width: '30rem', color: 'black' }">
+          <span class="p-text-secondary block mb-8 text-center">What is your note?</span>
+          <div class="flex flex-col  gap-2 mb-8">
+
+            <label for="username" class="font-semibold ">Note Title</label>
+            <input formControlName="title" pInputText id="username" class="flex-auto " autocomplete="off"
+              [style]="{ borderColor: 'rgba(0, 0, 0, 0.8)' }" />
+
+              @let titleInput = addNoteForm.get('title') ;
+
+              @if(titleInput?.errors && titleInput?.touched) {
+                <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                  <span class="sr-only">Danger</span>
+                  <div>
+                      <ul class="mt-1.5 list-disc list-inside">
+                        @if(titleInput?.getError('required') && titleInput?.touched) {
+                          <li> This field is required</li>
+                        }@else if (titleInput?.getError('minlength')) {
+                          <li> Description must be at least 3 characters</li>
+                        }@else if (titleInput?.getError('maxlength')) {
+                          <li> Description must be at most 20 characters</li>
+                        }
+                    </ul>
+                  </div>
+                </div>
+              }
+          </div>
+          <div class="flex flex-col  gap-2 mb-8">
+            <label for="email" class="font-semibold ">Note Description</label>
+            <textarea formControlName="content" id="email" class="flex-auto rounded-lg focus:ring-transparent "
+              [style]="{ borderColor: 'rgba(0, 0, 0, 0.8)' }" autocomplete="off"></textarea>
+              @let contentInput = addNoteForm.get('content') ;
+
+              @if(contentInput?.errors && contentInput?.touched) {
+                <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                  <span class="sr-only">Danger</span>
+                  <div>
+                      <ul class="mt-1.5 list-disc list-inside">
+                        @if(contentInput?.getError('required') && contentInput?.touched) {
+                          <li> This field is required</li>
+                        }@else if (contentInput?.getError('minlength')) {
+                          <li> Description must be at least 10 characters</li>
+                        }@else if (contentInput?.getError('maxlength')) {
+                          <li> Description must be at most 100 characters</li>
+                        }
+                    </ul>
+                  </div>
+                </div>
+              }
+
+          </div>
+          <div class="flex justify-end gap-2">
+            <p-button [disabled]="callinjgApi" (click)="addNote()"  severity="contrast"  >
+              @if(callinjgApi) {
+
+                <i class="pi pi-spin pi-spinner" ></i>
+              }@else {
+
+                ADD
+              }
+
+            </p-button>
+            <p-button label="Cancel" severity="danger" (click)="addNoteForm.reset()" (click)="visible = false" />
+          </div>
+        </p-dialog>
+      </form>
+    </div>
+  </main>
+</section>
