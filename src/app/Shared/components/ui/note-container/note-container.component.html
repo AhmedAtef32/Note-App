@@ -1,20 +1,99 @@
-<div class="card rounded-2xl   px-5 py-6 relative"   [style]="{ backgroundColor: colorsNotes[colorIndex] }">
+<div class="card rounded-2xl   px-5 py-6 relative min-h-[200px]" [class]="{
+  'bg-[#8A6FBF]': index() % 3 === 1,
+  'bg-[#DBE689]': index() % 3 === 2,
+  'bg-[#F4C16D]': index() % 2 === 0,
+  'bg-[#00CCF4]': index() % 2 === 1,
+}">
   <div class="card__header">
     <h3 class="text-2xl font-bold my-2.5"> {{note().title}} </h3>
     <p class="text-gray-700"> {{note().content}} </p>
 
     <div class="card__footer">
-      <div class="flex justify-between items-center mt-4">
+      <div class="flex justify-between items-end mt-4 h-full ">
         <div class="flex items-center justify-between ">
 
           <p class="text-gray-800 ms-2"> {{note().createdAt | date:'short'}} </p>
           <p-toast />
 
-          <p-speeddial [model]="items" direction="up"
+          <p-speeddial [model]="items" [radius]="80" type="quarter-circle" direction="up-left"
             [buttonStyle]="{backgroundColor: 'black', color: 'white' , border: 'none'}"
             [style]="{ position: 'absolute', right: '10px', bottom: '5px'}" />
         </div>
       </div>
     </div>
   </div>
+</div>
+
+
+<div class="card flex justify-center">
+  <p-dialog [header]="note().title" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
+    <p>
+      {{note().content}}
+    </p>
+  </p-dialog>
+</div>
+
+<div class="card flex justify-center">
+  <p-dialog [(visible)]="visibleUpdate" header="Update Note" [modal]="true" [style]="{ width: '25rem' }">
+
+    <span class="p-text-secondary block mb-8 text-center">Update your Note.</span>
+    <form [formGroup]="updateNoteForm">
+      <div class="flex flex-col  gap-2 mb-8">
+
+        <label for="username" class="font-semibold ">Note Title</label>
+        <input formControlName="title" pInputText id="username" class="flex-auto " autocomplete="off"
+          [style]="{ borderColor: 'rgba(0, 0, 0, 0.8)' }" />
+
+        @let titleInput = updateNoteForm.get('title') ;
+
+        @if(titleInput?.errors && titleInput?.touched) {
+        <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+          role="alert">
+          <span class="sr-only">Danger</span>
+          <div>
+            <ul class="mt-1.5 list-disc list-inside">
+              @if(titleInput?.getError('required') && titleInput?.touched) {
+              <li> This field is required</li>
+              }@else if (titleInput?.getError('minlength')) {
+              <li> Description must be at least 3 characters</li>
+              }@else if (titleInput?.getError('maxlength')) {
+              <li> Description must be at most 20 characters</li>
+              }
+            </ul>
+          </div>
+        </div>
+        }
+      </div>
+      <div class="flex flex-col  gap-2 mb-8">
+        <label for="email" class="font-semibold ">Note Description</label>
+        <textarea formControlName="content" id="email" class="flex-auto rounded-lg focus:ring-transparent "
+          [style]="{ borderColor: 'rgba(0, 0, 0, 0.8)' }" autocomplete="off"></textarea>
+        @let contentInput = updateNoteForm.get('content') ;
+
+        @if(contentInput?.errors && contentInput?.touched) {
+        <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+          role="alert">
+          <span class="sr-only">Danger</span>
+          <div>
+            <ul class="mt-1.5 list-disc list-inside">
+              @if(contentInput?.getError('required') && contentInput?.touched) {
+              <li> This field is required</li>
+              }@else if (contentInput?.getError('minlength')) {
+              <li> Description must be at least 10 characters</li>
+              }@else if (contentInput?.getError('maxlength')) {
+              <li> Description must be at most 100 characters</li>
+              }
+            </ul>
+          </div>
+        </div>
+        }
+
+      </div>
+    </form>
+    <ng-template #footer>
+      <p-button severity="contrast" (click)="updateNote()"> Update</p-button>
+      <p-button label="Cancel" severity="danger" [text]="true" (click)="visibleUpdate = false" />
+    </ng-template>
+  </p-dialog>
 </div>

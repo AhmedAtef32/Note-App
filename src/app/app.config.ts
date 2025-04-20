@@ -10,6 +10,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { provideToastr } from 'ngx-toastr';
 import { tokenInterceptor } from './core/interceptor/token/token.interceptor';
+import { error } from 'console';
+import { errorInterceptor } from './core/interceptor/err/error.interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -24,7 +26,7 @@ export const appConfig: ApplicationConfig = {
         }
       }
   }),
-  provideHttpClient(withFetch(), withInterceptors([tokenInterceptor])),
+  provideHttpClient(withFetch(), withInterceptors([tokenInterceptor , errorInterceptor])),
   provideAnimations(),
     provideToastr(),
     ]

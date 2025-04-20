@@ -29,4 +29,5 @@ export class SidebarComponent {
 
     visible: boolean = false;
 
+    
 }

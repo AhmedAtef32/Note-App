@@ -39,7 +39,7 @@ export class LoginComponent {
       this.authService.loginApi(this.registerForm.value).subscribe({
         next:(res)=>{
           console.log(res)
-          this.toastrService.success("Register Successfully","Docker")
+          this.toastrService.success("Login Successfully","Docker")
           localStorage.setItem("NoteToken",res.token)
           setTimeout(()=>{
             this.router.navigate(["/home"])

@@ -22,4 +22,7 @@ export class NotesService {
     return this.httpClient.post(`${apis.baseurl}notes`,data)
   }
 
+  UpdateNote(id:string,data:object):Observable<any>{
+    return this.httpClient.put(`${apis.baseurl}notes/${id}`,data)
+  }
 }

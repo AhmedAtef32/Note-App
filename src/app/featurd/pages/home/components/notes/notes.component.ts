@@ -5,13 +5,11 @@ import { Note } from '../../../../../Shared/interfaces/note';
 import { Dialog } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { title } from 'process';
-import { takeUntil } from 'rxjs';
-
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SearchNotePipe } from '../../../../../core/pipe/search-note.pipe';
 @Component({
   selector: 'app-notes',
-  imports: [NoteContainerComponent, Dialog, ButtonModule, InputTextModule,ReactiveFormsModule],
+  imports: [NoteContainerComponent, Dialog, ButtonModule, InputTextModule,ReactiveFormsModule,SearchNotePipe ,FormsModule],
   templateUrl: './notes.component.html',
   styleUrl: './notes.component.css',
 
@@ -21,7 +19,8 @@ export class NotesComponent implements OnInit {
   private readonly notesService = inject(NotesService)
   private readonly formBuilder = inject(FormBuilder)
   visible: boolean = false;
-  callinjgApi: boolean = false
+  callinjgApi: boolean = false;
+  searchNote: string = '';
   addNoteForm:FormGroup = this.formBuilder.group({
     title: [null , [Validators.required , Validators.minLength(3) , Validators.maxLength(20) ]],
     content : [null , [Validators.required , Validators.minLength(10) , Validators.maxLength(100) ]]
@@ -33,9 +32,13 @@ export class NotesComponent implements OnInit {
   showDialog() {
       this.visible = true;
   }
+
+
   userNotes!:Note[]
 
-
+ggg(){
+  console.log('this.userNotes')
+}
   getUserNote():void{
     this.notesService.getUserNote().subscribe({
       next:(res)=>{
