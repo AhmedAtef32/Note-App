@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, input, InputSignal, Output, output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, input, InputSignal, Output, output, ViewChild, viewChild } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { SpeedDial } from 'primeng/speeddial';
 import { ToastModule } from 'primeng/toast';
@@ -26,6 +26,7 @@ export class NoteContainerComponent {
   index:InputSignal<number> = input.required()
   visible: boolean = false;
   visibleUpdate: boolean = false;
+  @ViewChild('card') card!:ElementRef
   @Output() itemEvent:EventEmitter<string> = new EventEmitter();
   constructor(private messageService: MessageService ,  private notesService:NotesService , private toastrService : ToastrService  ) {}
 
@@ -52,9 +53,12 @@ export class NoteContainerComponent {
           {
               icon: 'pi pi-trash',
               command: () => {
-                this.onfireEvent();
                 this.toastrService.success('Note deleted successfully');
                 this.deleteNote(this.note()._id)
+                this.card.nativeElement.classList.add('animate__zoomOut')
+                setTimeout(() => {
+                  this.onfireEvent()
+                },300);
               }
           }
       ];
@@ -110,8 +114,6 @@ updateNote(){
  deleteNote(id:string){
   this.notesService.deleteNote(id).subscribe({
     next:(res)=>{
-    },error:(err)=>{
-
     }
   })
  }
