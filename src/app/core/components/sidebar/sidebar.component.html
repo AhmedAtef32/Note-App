@@ -45,16 +45,17 @@
     </ul>
    </div>
 
-   <div class="flex justify-end">
+   <div class="flex justify-center">
 
     @if(islogged()) {
 
-      <p-button type="button" (click)="authService.logout()" icon="pi pi-sign-out" rounded="true"  styleClass="h-8 w-8" [style]="{backgroundColor: '#F9FAFB' , color: 'red' , border: 'none'}"></p-button>
+      <p-button type="button" (click)="authService.logout()" icon="pi pi-sign-out" label="Logout" rounded="true"   [style]="{backgroundColor: 'white' , color: 'red' , border: 'none'}"></p-button>
     }
    </div>
 
   </div>
 </aside>
+
 </Section>
 
 <div class="card flex md:hidden">
@@ -80,14 +81,14 @@
                     </li>
                   }@else {
                     <li>
-                      <a routerLink="/login" routerLinkActive="!bg-black !text-white" role="button"
+                      <a routerLink="/login" (click)="closeCallback($event)" routerLinkActive="!bg-black !text-white" role="button"
                         class="flex items-center p-2 text-gray-600 rounded-lg dark:text-white  dark:hover:bg-gray-700 group ">
 
                         <span class="ms-3">Login</span>
                       </a>
                     </li>
                     <li>
-                      <a routerLink="/register" routerLinkActive="!bg-black !text-white" role="button"
+                      <a routerLink="/register" (click)="closeCallback($event)" routerLinkActive="!bg-black !text-white" role="button"
                         class="flex items-center p-2 text-gray-600 rounded-lg dark:text-white  dark:hover:bg-gray-700 group">
 
                         <span class="ms-3">Register</span>
@@ -99,10 +100,10 @@
               </div>
               </div>
 
-              <div class="flex justify-end">
+              <div class="flex justify-center">
                 @if(islogged()) {
 
-                  <p-button type="button" (click)="authService.logout()" icon="pi pi-sign-out" rounded="true"  styleClass="h-8 w-8" [style]="{backgroundColor: '#F9FAFB' , color: 'red' , border: 'none'}"></p-button>
+                  <p-button type="button" (click)="authService.logout()" icon="pi pi-sign-out" label="Logout" rounded="true"   [style]="{backgroundColor: 'white' , color: 'red' , border: 'none'}"></p-button>
                 }
                </div>
           </div>

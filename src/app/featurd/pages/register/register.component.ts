@@ -26,7 +26,7 @@ export class RegisterComponent {
   registerForm:FormGroup = this.formBuilder.group({
     name: [null , [Validators.required , Validators.minLength(3) , Validators.maxLength(20) ]],
     email: [null , [Validators.required , Validators.email]],
-    password: [null , [Validators.required , Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/) ]],
+    password: [null , [Validators.required , Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,16}$/) ]],
     age: [null , [Validators.required , Validators.min(15) ]],
     phone:[null , [Validators.required , Validators.pattern(/^01[0125]{1}[0-9]{8}$/) ]]
   })
