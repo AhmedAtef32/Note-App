@@ -56,6 +56,7 @@ export class NoteContainerComponent {
                 this.toastrService.success('Note deleted successfully');
                 this.deleteNote(this.note()._id)
                 this.card.nativeElement.classList.add('animate__zoomOut')
+                this.card.nativeElement.classList.remove('min-h-[200px]')
                 setTimeout(() => {
                   this.onfireEvent()
                 },300);

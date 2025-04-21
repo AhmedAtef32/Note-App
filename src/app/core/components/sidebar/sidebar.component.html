@@ -45,9 +45,8 @@
     </ul>
    </div>
 
-   <div class="flex justify-between">
+   <div class="flex justify-end">
 
-    <p-button type="button"  icon="pi pi-moon" rounded="true"  styleClass="h-8 w-8" [style]="{backgroundColor: '#F9FAFB' , color: 'black' , border: 'none'}"></p-button>
     @if(islogged()) {
 
       <p-button type="button" (click)="authService.logout()" icon="pi pi-sign-out" rounded="true"  styleClass="h-8 w-8" [style]="{backgroundColor: '#F9FAFB' , color: 'red' , border: 'none'}"></p-button>
@@ -66,7 +65,7 @@
                 <div class="flex items-center justify-between px-6 pt-4 shrink-0">
                   <h1 class="text-2xl font-bold text-center my-4 text-black dark:text-white">Docket</h1>
                   <span>
-                      <p-button type="button" (click)="closeCallback($event)" icon="pi pi-times" rounded="true"  styleClass="h-8 w-8" [style]="{backgroundColor: 'white' , color: 'black' , border: 'none'}"></p-button>
+                      <p-button type="button" (click)="closeCallback($event)" icon="pi pi-times" rounded="true"  styleClass="h-10 w-10" [style]="{backgroundColor: 'white' , color: 'black' , border: 'none'}"></p-button>
                   </span>
               </div>
               <div class="overflow-y-auto">
@@ -100,8 +99,7 @@
               </div>
               </div>
 
-              <div class="flex justify-between">
-                <p-button type="button"  icon="pi pi-moon" rounded="true"  styleClass="h-8 w-8" [style]="{backgroundColor: '#F9FAFB' , color: 'black' , border: 'none'}"></p-button>
+              <div class="flex justify-end">
                 @if(islogged()) {
 
                   <p-button type="button" (click)="authService.logout()" icon="pi pi-sign-out" rounded="true"  styleClass="h-8 w-8" [style]="{backgroundColor: '#F9FAFB' , color: 'red' , border: 'none'}"></p-button>

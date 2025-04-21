@@ -12,7 +12,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 transition-all duration-300 ease-in-out overflow-hidden">
 
         @if(userNotes){
-          @for (note of userNotes; track note._id ; let index = $index) {
+          @for (note of userNotes ; track note._id ; let index = $index) {
 
             <app-note-container (itemEvent)="userNotes.splice( index, 1) " [index]="index" [note]="note"></app-note-container>
             }
