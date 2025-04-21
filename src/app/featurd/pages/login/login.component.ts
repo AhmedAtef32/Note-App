@@ -7,12 +7,12 @@ import { ButtonModule } from 'primeng/button';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-login',
-  imports: [FloatLabelModule, InputTextModule, FormsModule,ReactiveFormsModule,PasswordModule,ButtonModule],
+  imports: [FloatLabelModule, InputTextModule, FormsModule,ReactiveFormsModule,PasswordModule,ButtonModule ,RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
