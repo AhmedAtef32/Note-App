@@ -7,9 +7,12 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SearchNotePipe } from '../../../../../core/pipe/search-note.pipe';
+import { SkeletonComponent } from "../../../../../Shared/components/ui/skeleton/skeleton.component";
+import { MessageService } from 'primeng/api';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-notes',
-  imports: [NoteContainerComponent, Dialog, ButtonModule, InputTextModule,ReactiveFormsModule,SearchNotePipe ,FormsModule],
+  imports: [NoteContainerComponent, Dialog, ButtonModule, InputTextModule, ReactiveFormsModule, SearchNotePipe, FormsModule, SkeletonComponent],
   templateUrl: './notes.component.html',
   styleUrl: './notes.component.css',
 
@@ -18,6 +21,10 @@ export class NotesComponent implements OnInit {
 
   private readonly notesService = inject(NotesService)
   private readonly formBuilder = inject(FormBuilder)
+  private readonly toastrService = inject(ToastrService)
+  userNotes!:Note[]
+  skeleton:Array<number> = [1 ,2 ,3 ,4 , 5 , 6]
+  noNotesData:boolean = true
   visible: boolean = false;
   callinjgApi: boolean = false;
   searchNote: string = '';
@@ -34,18 +41,18 @@ export class NotesComponent implements OnInit {
   }
 
 
-  userNotes!:Note[]
 
-ggg(){
-  console.log('this.userNotes')
-}
+
   getUserNote():void{
     this.notesService.getUserNote().subscribe({
       next:(res)=>{
         this.userNotes = res.notes
+        this.noNotesData = false
         console.log(res)
       },error:(err)=>{
-        console.log(err)
+        this.noNotesData = false
+        this.toastrService.info('No Notes Found','Docker')
+
       }
     })
   }
@@ -61,7 +68,6 @@ ggg(){
           this.addNoteForm.reset()
           this.getUserNote()
         },error:(err)=>{
-          console.log(err)
           this.callinjgApi = false
         }
       })
