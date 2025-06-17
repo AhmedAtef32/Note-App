@@ -1,3 +1,4 @@
+import { NotesService } from './../../../Shared/services/notes/notes.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  constructor( private httpClient:HttpClient , private router_:Router) { }
+  constructor( private httpClient:HttpClient , private router_:Router , private notesService:NotesService) { }
 
   registerApi(data:object):Observable<any>{
     return this.httpClient.post(`${apis.baseurl}users/signUp`,data)
@@ -21,6 +22,7 @@ export class AuthService {
   logout():void{
     localStorage.removeItem("NoteToken");
     this.router_.navigate(["/login"]);
+    this.notesService.notes$ = undefined
   }
 
 

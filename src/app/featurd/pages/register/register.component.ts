@@ -32,6 +32,13 @@ export class RegisterComponent {
   })
 
 
+
+  /**
+   * Handles the submission of the register form.
+   * If the form is valid, it makes a request to the backend to create a new user
+   * and logs the user in if successful.
+   * If the form is invalid, it marks all the fields as touched.
+   */
   submitRegisterForm(){
     this.callingApi = true
     if(this.registerForm.valid){

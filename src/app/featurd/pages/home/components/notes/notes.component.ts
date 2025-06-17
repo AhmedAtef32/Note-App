@@ -8,7 +8,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SearchNotePipe } from '../../../../../core/pipe/search-note.pipe';
 import { SkeletonComponent } from "../../../../../Shared/components/ui/skeleton/skeleton.component";
-import { MessageService } from 'primeng/api';
 import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-notes',
@@ -58,11 +57,13 @@ export class NotesComponent implements OnInit {
   }
 
   addNote(){
-    this.callinjgApi = true
+    this.callinjgApi = true;
+
     if(this.addNoteForm.valid){
       this.notesService.addNote(this.addNoteForm.value).subscribe({
         next:(res)=>{
           console.log(res)
+          this.notesService.notes$ = undefined
           this.callinjgApi = false
           this.visible = false
           this.addNoteForm.reset()

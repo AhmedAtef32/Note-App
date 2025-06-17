@@ -1,18 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, pipe, shareReplay } from 'rxjs';
 import { apis } from '../../../core/enviroments/enviroment';
+import { Note } from '../../interfaces/note';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotesService {
 
+  notes$:Observable<Note[]> | undefined
   constructor(private httpClient:HttpClient) { }
 
+
   getUserNote():Observable<any>{
-    return this.httpClient.get(`${apis.baseurl}notes`)
+    if(!this.notes$){
+      this.notes$ = this.httpClient.get<Note[]>(`${apis.baseurl}notes`).pipe(shareReplay(1))
   }
+  return this.notes$
+    }
+
 
   deleteNote(id:string):Observable<any>{
     return this.httpClient.delete(`${apis.baseurl}notes/${id}`)
